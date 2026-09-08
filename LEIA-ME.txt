@@ -1,0 +1,12 @@
+Site do clima - Aero 277
+
+Suba TODO o conteudo desta pasta na raiz do repositorio:
+  index.html, fotos.json, .nojekyll, LEIA-ME.txt
+  pastas: assets, ds
+  arquivos: support.js, image-slot.js
+
+Observacoes:
+- O arquivo .nojekyll e invisivel em algumas maquinas; se nao conseguir
+  arrasta-lo, crie no GitHub: Add file > Create new file, nome ".nojekyll",
+  deixe vazio e faca commit.
+- Depois: Settings > Pages > branch main, pasta / (root).

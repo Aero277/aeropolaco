@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/styles.css">
+<script src="ds/bundle.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<script src="./image-slot.js"></script>
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes drift { from { transform: translateY(440px); } to { transform: translateY(-440px); } }
+body { margin: 0; background: var(--color-bg); }
+a { color: var(--color-accent-300); text-decoration: none; }
+a:hover { color: var(--color-accent-200); }
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(125% 62% at 50% 0%, {{ vGlow }} 0%, var(--color-bg) 62%); transition: background 1.2s ease; color: var(--color-text); font-family: var(--font-body); padding: 34px 20px 44px; display: flex; justify-content: center;">
+<div style="width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 26px;">
+
+  <div style="display: flex; align-items: center; gap: 18px;">
+    <img src="assets/aeropolaco-logo.png" alt="Aeropolaco" style="width: 104px; height: 104px; flex: 0 0 104px; object-fit: contain;">
+    <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
+      <div style="font-family: var(--font-heading); font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -0.02em;">Aero 277 · Aeropolaco</div>
+      <div style="font-size: 14px; color: var(--color-neutral-300);">Fernandes Pinheiro, Paraná</div>
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 3px;">
+        <span style="font-size: 14px; color: var(--color-neutral-400);">{{ hoje }}</span>
+        <span style="font-family: var(--font-heading); font-weight: 500; font-size: 16px; color: var(--color-accent-300); font-variant-numeric: tabular-nums;">{{ agora }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--color-neutral-800) 48px, var(--color-neutral-800) calc(100% - 48px), transparent);"></div>
+
+  <div style="display: flex; gap: 8px;">
+    <button onClick="{{ abaClima }}" style="{{ styleAbaClima }}">Clima</button>
+    <button onClick="{{ abaFotos }}" style="{{ styleAbaFotos }}">Fotos</button>
+  </div>
+
+  <sc-if value="{{ verClima }}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; gap: 26px;">
+
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Dá pra voar agora?</div>
+    <div style="display: flex; align-items: baseline; gap: 12px;">
+      <span style="width: 12px; height: 12px; border-radius: 50%; flex: 0 0 12px; background: {{ vColor }}; box-shadow: 0 0 16px {{ vColor }}; animation: pulse 2.6s ease-in-out infinite;"></span>
+      <span style="font-family: var(--font-heading); font-weight: 500; font-size: 31px; line-height: 1.15; letter-spacing: -0.02em; color: {{ vColor }};">{{ vLabel }}</span>
+    </div>
+    <div style="font-size: 15px; color: var(--color-neutral-300); max-width: 36ch; text-wrap: pretty;">{{ vDetail }}</div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Referência da pista</div>
+    <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--color-surface);">
+      <image-slot id="pista-aero277" shape="rect" fit="cover" src="assets/pista-aero277.webp" placeholder="Arraste aqui a foto aérea ou o desenho da pista"></image-slot>
+      <div style="position: absolute; inset: -30%; pointer-events: none; transform: {{ windArrow }}; --wd: {{ windDur }}; transition: transform .8s ease;">
+        <span style="position: absolute; left: 10.0%; top: 16%; width: 3px; height: 40px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.000);"></span>
+        </span>
+        <span style="position: absolute; left: 13.1%; top: 39%; width: 2px; height: 53px; opacity: 0.44;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.618);"></span>
+        </span>
+        <span style="position: absolute; left: 16.2%; top: 16%; width: 2px; height: 66px; opacity: 0.56;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.236);"></span>
+        </span>
+        <span style="position: absolute; left: 19.3%; top: 39%; width: 3px; height: 79px; opacity: 0.38;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.854);"></span>
+        </span>
+        <span style="position: absolute; left: 22.4%; top: 16%; width: 2px; height: 52px; opacity: 0.50;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.472);"></span>
+        </span>
+        <span style="position: absolute; left: 25.5%; top: 39%; width: 2px; height: 65px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.090);"></span>
+        </span>
+        <span style="position: absolute; left: 28.6%; top: 16%; width: 3px; height: 78px; opacity: 0.44;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.708);"></span>
+        </span>
+        <span style="position: absolute; left: 31.7%; top: 39%; width: 2px; height: 51px; opacity: 0.56;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.326);"></span>
+        </span>
+        <span style="position: absolute; left: 34.8%; top: 16%; width: 2px; height: 64px; opacity: 0.38;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.944);"></span>
+        </span>
+        <span style="position: absolute; left: 37.9%; top: 39%; width: 3px; height: 77px; opacity: 0.50;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.562);"></span>
+        </span>
+        <span style="position: absolute; left: 41.0%; top: 16%; width: 2px; height: 50px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.180);"></span>
+        </span>
+        <span style="position: absolute; left: 44.1%; top: 39%; width: 2px; height: 63px; opacity: 0.44;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.798);"></span>
+        </span>
+        <span style="position: absolute; left: 47.2%; top: 16%; width: 3px; height: 76px; opacity: 0.56;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.416);"></span>
+        </span>
+        <span style="position: absolute; left: 50.3%; top: 39%; width: 2px; height: 49px; opacity: 0.38;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.034);"></span>
+        </span>
+        <span style="position: absolute; left: 53.4%; top: 16%; width: 2px; height: 62px; opacity: 0.50;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.652);"></span>
+        </span>
+        <span style="position: absolute; left: 56.5%; top: 39%; width: 3px; height: 75px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.271);"></span>
+        </span>
+        <span style="position: absolute; left: 59.6%; top: 16%; width: 2px; height: 48px; opacity: 0.44;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.889);"></span>
+        </span>
+        <span style="position: absolute; left: 62.7%; top: 39%; width: 2px; height: 61px; opacity: 0.56;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.507);"></span>
+        </span>
+        <span style="position: absolute; left: 65.8%; top: 16%; width: 3px; height: 74px; opacity: 0.38;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.125);"></span>
+        </span>
+        <span style="position: absolute; left: 68.9%; top: 39%; width: 2px; height: 47px; opacity: 0.50;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.743);"></span>
+        </span>
+        <span style="position: absolute; left: 72.0%; top: 16%; width: 2px; height: 60px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.361);"></span>
+        </span>
+        <span style="position: absolute; left: 75.1%; top: 39%; width: 3px; height: 73px; opacity: 0.44;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.979);"></span>
+        </span>
+        <span style="position: absolute; left: 78.2%; top: 16%; width: 2px; height: 46px; opacity: 0.56;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.597);"></span>
+        </span>
+        <span style="position: absolute; left: 81.3%; top: 39%; width: 2px; height: 59px; opacity: 0.38;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.215);"></span>
+        </span>
+        <span style="position: absolute; left: 84.4%; top: 16%; width: 3px; height: 72px; opacity: 0.50;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-300), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.833);"></span>
+        </span>
+        <span style="position: absolute; left: 87.5%; top: 39%; width: 2px; height: 45px; opacity: 0.32;">
+          <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.451);"></span>
+        </span>
+      </div>
+      <div style="position: absolute; left: 12px; top: 12px; pointer-events: none; padding: 6px 10px; border-radius: var(--radius-md); background: rgba(22,24,38,0.82); box-shadow: var(--shadow-sm); font-size: 13px; color: var(--color-neutral-200);">Vento de {{ windCardinal }} · {{ wind }} km/h · rajadas {{ gust }} km/h</div>
+      <div style="position: absolute; right: 14px; top: 14px; pointer-events: none; width: 92px; height: 92px; border-radius: 50%; border: 1px solid var(--color-neutral-700); background: radial-gradient(circle, rgba(22,24,38,0.88), rgba(22,24,38,0.62));">
+        <span style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--color-neutral-300);">N</span>
+        <span style="position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--color-neutral-400);">S</span>
+        <span style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--color-neutral-400);">O</span>
+        <span style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--color-neutral-400);">L</span>
+        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: {{ windArrow }}; transition: transform .6s ease;">
+          <i class="ph ph-arrow-up" style="font-size: 40px; color: var(--color-accent-200); line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.7);"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Janela de voo</div>
+    <div style="display: flex; gap: 3px; align-items: flex-end;">
+      <sc-for list="{{ janela }}" as="b" hint-placeholder-count="13">
+        <div onClick="{{ b.sel }}" style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; cursor: pointer;" title="{{ b.nota }}">
+          <div style="width: 100%; height: 34px; border-radius: var(--radius-sm); background: {{ b.cor }}; box-shadow: {{ b.anel }}; display: flex; align-items: center; justify-content: center; gap: 2px;">
+            <sc-if value="{{ b.vento }}" hint-placeholder-val="{{ false }}"><i class="ph ph-wind" style="font-size: 13px; color: rgba(20,20,26,0.78);"></i></sc-if>
+            <sc-if value="{{ b.chuva }}" hint-placeholder-val="{{ false }}"><i class="ph ph-drop" style="font-size: 13px; color: rgba(20,20,26,0.78);"></i></sc-if>
+          </div>
+          <span style="font-size: 11px; color: {{ b.rotulo }}; font-variant-numeric: tabular-nums;">{{ b.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+      <span style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 12px; color: var(--color-neutral-400);">{{ janelaRotulo }}</span>
+        <span style="font-family: var(--font-heading); font-weight: 500; font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; color: var(--color-neutral-100);">{{ janelaValor }}</span>
+      </span>
+      <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 11px; color: var(--color-neutral-500);">
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.72 0.10 155);"></span>ok</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.79 0.11 82);"></span>atenção</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.62 0.12 25);"></span>não</span>
+      </span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 22px;">
+      <span style="font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-300);">{{ detalheHora }}</span>
+      <span style="font-size: 14px; color: var(--color-neutral-200);">{{ detalheTexto }}</span>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+    <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-lg); padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="display: flex; align-items: center; gap: 7px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-thermometer-simple" style="font-size: 15px;"></i>Temperatura</div>
+      <div style="display: flex; align-items: baseline; gap: 4px;">
+        <span style="font-family: var(--font-heading); font-weight: 500; font-size: 30px; line-height: 1;">{{ temp }}</span>
+        <span style="font-size: 14px; color: var(--color-neutral-400);">°C</span>
+      </div>
+      <div style="font-size: 13px; color: var(--color-neutral-400);">sensação {{ feels }}°C</div>
+    </div>
+    <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-lg); padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+      <div style="display: flex; align-items: center; gap: 7px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-drop" style="font-size: 15px;"></i>Chuva</div>
+      <div style="display: flex; align-items: baseline; gap: 4px;">
+        <span style="font-family: var(--font-heading); font-weight: 500; font-size: 30px; line-height: 1;">{{ rain }}</span>
+        <span style="font-size: 14px; color: var(--color-neutral-400);">%</span>
+      </div>
+      <div style="font-size: 13px; color: var(--color-neutral-400);">{{ cond }}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Mapa Windy · campo do Aero 277</div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button onClick="{{ setWind }}" style="{{ styleWind }}">Vento</button>
+      <button onClick="{{ setGust }}" style="{{ styleGust }}">Rajadas</button>
+      <button onClick="{{ setRain }}" style="{{ styleRain }}">Chuva</button>
+      <button onClick="{{ setClouds }}" style="{{ styleClouds }}">Nuvens</button>
+      <button onClick="{{ setRadar }}" style="{{ styleRadar }}">Radar de chuva</button>
+    </div>
+    <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--color-surface); height: 340px;">
+      <iframe src="{{ windyUrl }}" title="Mapa Windy do campo" style="width: 100%; height: 100%; border: 0; display: block;" loading="lazy"></iframe>
+    </div>
+    <div style="font-size: 13px; color: var(--color-neutral-400);">Arraste o mapa e use a linha do tempo do Windy para ver como o vento entra na pista nas próximas horas.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Outras condições</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 10px;">
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-drop-half" style="font-size: 14px;"></i>Umidade</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.humidity }}%</div>
+      </div>
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-gauge" style="font-size: 14px;"></i>Pressão</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.pressure }} <span style="font-size: 12px; color: var(--color-neutral-400);">hPa</span></div>
+      </div>
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-cloud" style="font-size: 14px;"></i>Nuvens</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.cloud }}%</div>
+      </div>
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-eye" style="font-size: 14px;"></i>Visibilidade</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.vis }} <span style="font-size: 12px; color: var(--color-neutral-400);">km</span></div>
+      </div>
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-sun-dim" style="font-size: 14px;"></i>Índice UV</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.uv }}</div>
+      </div>
+      <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-sun-horizon" style="font-size: 14px;"></i>Sol</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 20px;">{{ ex.sunrise }} <span style="font-size: 12px; color: var(--color-neutral-400);">→ {{ ex.sunset }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Próximos dias</div>
+    <div style="display: flex; flex-direction: column;">
+      <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+        <div style="display: grid; grid-template-columns: 52px 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 13px 2px; border-top: 1px solid var(--color-neutral-900); font-size: 14px;">
+          <span style="color: var(--color-neutral-200);">{{ d.label }}</span>
+          <i class="{{ d.icon }}" style="font-size: 19px; color: var(--color-accent-400);"></i>
+          <span style="color: var(--color-neutral-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ d.desc }} · {{ d.rain }}% · {{ d.wind }} km/h</span>
+          <span style="color: var(--color-neutral-200); font-variant-numeric: tabular-nums;">{{ d.max }}° <span style="color: var(--color-neutral-600);">{{ d.min }}°</span></span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 4px;">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <button class="btn btn-secondary" onClick="{{ reload }}" style="display: inline-flex; align-items: center; gap: 7px;"><i class="ph ph-arrows-clockwise" style="font-size: 15px;"></i>Atualizar</button>
+      <a class="btn btn-ghost" href="https://www.instagram.com/aero277/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 7px;"><i class="ph ph-instagram-logo" style="font-size: 16px;"></i>@aero277</a>
+    </div>
+    <div style="font-size: 13px; color: var(--color-neutral-400); line-height: 1.6;">{{ status }}<br>Dados Open-Meteo e mapa Windy para as coordenadas do campo em Fernandes Pinheiro. O semáforo é uma orientação — a decisão de voar é sempre do piloto.</div>
+  </div>
+
+
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ verFotos }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Fotos do campo</div>
+        <div style="font-size: 14px; color: var(--color-neutral-300); text-wrap: pretty;">Voos, modelos e encontros no Aero 277.</div>
+      </div>
+      <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}">
+        <label onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}" style="{{ styleZona }}">
+          <input type="file" accept="image/*" multiple="{{ true }}" onChange="{{ onPick }}" style="display: none;">
+          <i class="ph ph-images" style="font-size: 30px; color: var(--color-accent-300);"></i>
+          <span style="font-size: 15px; color: var(--color-neutral-200);">{{ zonaTexto }}</span>
+          <span style="font-size: 13px; color: var(--color-neutral-500);">Pode soltar várias de uma vez</span>
+        </label>
+      </sc-if>
+      <sc-if value="{{ temFotos }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+              <span style="font-size: 13px; color: var(--color-neutral-400);">{{ contagem }}</span>
+              <span style="display: inline-flex; align-items: center; gap: 14px;">
+                <button onClick="{{ exportar }}" style="padding: 0; border: 0; background: none; cursor: pointer; font-family: var(--font-body); font-size: 13px; color: var(--color-accent-300);">baixar fotos.json</button>
+                <button onClick="{{ limpar }}" style="padding: 0; border: 0; background: none; cursor: pointer; font-family: var(--font-body); font-size: 13px; color: var(--color-neutral-500);">remover todas</button>
+              </span>
+            </div>
+          </sc-if>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+            <sc-for list="{{ fotos }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ p.abrir }}" style="position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); box-shadow: var(--shadow-sm); cursor: pointer;">
+                <img src="{{ p.u }}" alt="Foto do campo" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}"><button onClick="{{ p.rm }}" title="Remover" style="position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(22,24,38,0.82); color: var(--color-neutral-200);"><i class="ph ph-x" style="font-size: 14px;"></i></button></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <a class="btn btn-ghost" href="https://www.instagram.com/aero277/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;"><i class="ph ph-instagram-logo" style="font-size: 16px;"></i>Mande sua foto pelo Instagram</a>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ visorAberto }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ fechar }}" onTouchStart="{{ onTouchStart }}" onTouchEnd="{{ onTouchEnd }}" style="position: fixed; inset: 0; z-index: 90; background: rgba(15,16,26,0.94); display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div role="img" aria-label="Foto do campo" style="{{ visorStyle }}"></div>
+      <button onClick="{{ anterior }}" title="Anterior" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-caret-left" style="font-size: 22px;"></i></button>
+      <button onClick="{{ proxima }}" title="Próxima" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-caret-right" style="font-size: 22px;"></i></button>
+      <button onClick="{{ fechar }}" title="Fechar" style="position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-x" style="font-size: 18px;"></i></button>
+      <span style="position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--color-neutral-400); font-variant-numeric: tabular-nums;">{{ visorPos }}</span>
+    </div>
+  </sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;limiteVento&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:21,&quot;min&quot;:10,&quot;max&quot;:45,&quot;step&quot;:1,&quot;unit&quot;:&quot; km/h&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Semáforo&quot;},&quot;limiteRajada&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:30,&quot;min&quot;:12,&quot;max&quot;:60,&quot;step&quot;:1,&quot;unit&quot;:&quot; km/h&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Semáforo&quot;},&quot;limiteChuva&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:70,&quot;min&quot;:30,&quot;max&quot;:95,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Semáforo&quot;},&quot;dias&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:7,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Previsão&quot;}}">
+const CARD = ['N','NNE','NE','ENE','L','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+const COND = {
+  0:['Céu limpo','ph ph-sun'], 1:['Quase limpo','ph ph-sun'], 2:['Parcialmente nublado','ph ph-cloud-sun'],
+  3:['Nublado','ph ph-cloud'], 45:['Nevoeiro','ph ph-cloud-fog'], 48:['Nevoeiro','ph ph-cloud-fog'],
+  51:['Garoa fraca','ph ph-cloud-rain'], 53:['Garoa','ph ph-cloud-rain'], 55:['Garoa forte','ph ph-cloud-rain'],
+  56:['Garoa congelante','ph ph-cloud-rain'], 57:['Garoa congelante','ph ph-cloud-rain'],
+  61:['Chuva fraca','ph ph-cloud-rain'], 63:['Chuva','ph ph-cloud-rain'], 65:['Chuva forte','ph ph-cloud-rain'],
+  66:['Chuva congelante','ph ph-cloud-rain'], 67:['Chuva congelante','ph ph-cloud-rain'],
+  71:['Neve fraca','ph ph-cloud-snow'], 73:['Neve','ph ph-cloud-snow'], 75:['Neve forte','ph ph-cloud-snow'],
+  77:['Grãos de neve','ph ph-cloud-snow'], 80:['Pancadas isoladas','ph ph-cloud-rain'],
+  81:['Pancadas','ph ph-cloud-rain'], 82:['Pancadas fortes','ph ph-cloud-rain'],
+  85:['Pancadas de neve','ph ph-cloud-snow'], 86:['Pancadas de neve','ph ph-cloud-snow'],
+  95:['Tempestade','ph ph-cloud-lightning'], 96:['Tempestade com granizo','ph ph-cloud-lightning'],
+  99:['Tempestade com granizo','ph ph-cloud-lightning']
+};
+const DIA = ['dom','seg','ter','qua','qui','sex','sáb'];
+const DEMO = {
+  current: { temperature_2m: 21.4, apparent_temperature: 20.8, weather_code: 2, wind_speed_10m: 11, wind_direction_10m: 315, wind_gusts_10m: 19, time: '' },
+  rain: 10,
+  extras: (() => {
+    const d = new Date(), n = t => t.toISOString().slice(0, 10);
+    const am = new Date(d.getTime() + 864e5);
+    return { humidity: 72, pressure: 1017, cloud: 45, vis: 12, uv: 6,
+      sunrise: '06:24', sunset: '18:12', sunrise2: '06:23', sunset2: '18:13',
+      date: n(d), date2: n(am) };
+  })(),
+  hourly: (() => {
+    const d = new Date().toISOString().slice(0, 10);
+    const t = [], wind = [], gust = [], rain = [];
+    for (let h = 0; h < 24; h++) {
+      t.push(d + 'T' + String(h).padStart(2, '0') + ':00');
+      wind.push(6 + ((h * 5) % 16)); gust.push(12 + ((h * 7) % 20)); rain.push((h * 11) % 70);
+    }
+    return { time: t, wind: wind, gust: gust, rain: rain };
+  })(),
+  hours: Array.from({ length: 12 }, (_, i) => ({
+    label: ((10 + i) % 24) + 'h', temp: 18 + ((i * 3) % 7), wind: 8 + ((i * 5) % 14),
+    gust: 14 + ((i * 7) % 18), rain: (i * 13) % 60, icon: 'ph ph-cloud-sun'
+  })),
+  days: [
+    { label: 'Hoje', code: 2, max: 24, min: 13, rain: 10, wind: 14 },
+    { label: 'Amanhã', code: 3, max: 22, min: 12, rain: 35, wind: 21 },
+    { label: 'qua', code: 61, max: 19, min: 12, rain: 75, wind: 26 },
+    { label: 'qui', code: 1, max: 23, min: 11, rain: 5, wind: 12 },
+    { label: 'sex', code: 0, max: 25, min: 12, rain: 0, wind: 9 }
+  ]
+};
+
+class Component extends DCLogic {
+  state = { data: null, offline: false, loading: true, at: null, overlay: 'wind', horaSel: null, aba: 'clima', fotos: [], sobre: false, visor: null, repetidas: 0, publicadas: [], novas: [] };
+
+  componentDidMount() {
+    this.admin = !/github\.io|\bpublic\b/.test(location.hostname + location.hash);
+    let local = [];
+    try {
+      const g = JSON.parse(localStorage.getItem('aero277-fotos') || '[]');
+      if (Array.isArray(g)) local = g;
+    } catch (e) {}
+    this.local = local;
+    fetch('fotos.json')
+      .then(r => r.json())
+      .then(j => {
+        const pub = (j.fotos || []).map(p => ({ u: p }));
+        // fotos já convertidas em arquivo não voltam a aparecer como arrastadas
+        let marca = parseInt(localStorage.getItem('aero277-fotos-publicadas') || '-1', 10);
+        if (marca < 0) {
+          marca = pub.length ? this.local.length : 0;
+          try { localStorage.setItem('aero277-fotos-publicadas', String(marca)); } catch (e) {}
+        }
+        this.setState({ publicadas: pub, novas: this.local.slice(marca) });
+      })
+      .catch(() => this.setState({ novas: this.local }));
+    this.load();
+    this.clock = setInterval(() => this.forceUpdate(), 20000);
+    this.timer = setInterval(() => this.load(), 600000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer); clearInterval(this.clock);
+    if (this.teclado) window.removeEventListener('keydown', this.teclado);
+  }
+
+  async load() {
+    this.setState({ loading: true });
+    const n = Math.min(7, Math.max(3, this.props.dias ?? 5)) + 1;
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-25.4676635&longitude=-50.5682634'
+      + '&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m'
+      + ',relative_humidity_2m,pressure_msl,cloud_cover,visibility'
+      + '&hourly=precipitation_probability,temperature_2m,weather_code,wind_speed_10m,wind_gusts_10m'
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset,uv_index_max'
+      + '&timezone=America%2FSao_Paulo&forecast_days=' + n;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('http ' + r.status);
+      const j = await r.json();
+      this.setState({ data: this.shape(j), offline: false, loading: false, at: new Date() });
+    } catch (e) {
+      this.setState({ data: null, offline: true, loading: false, at: new Date() });
+    }
+  }
+
+  shape(j) {
+    const hour = (j.current.time || '').slice(0, 13);
+    let idx = (j.hourly.time || []).findIndex(t => t.slice(0, 13) === hour);
+    if (idx < 0) idx = 0;
+    const keep = Math.min(7, Math.max(3, this.props.dias ?? 5));
+    const days = j.daily.time.slice(0, keep).map((t, i) => ({
+      label: i === 0 ? 'Hoje' : i === 1 ? 'Amanhã' : DIA[new Date(t + 'T12:00').getDay()],
+      code: j.daily.weather_code[i],
+      max: Math.round(j.daily.temperature_2m_max[i]),
+      min: Math.round(j.daily.temperature_2m_min[i]),
+      rain: Math.round(j.daily.precipitation_probability_max[i] ?? 0),
+      wind: Math.round(j.daily.wind_speed_10m_max[i])
+    }));
+    const hh = t => (t || '').slice(11, 16);
+    const hours = j.hourly.time.slice(idx, idx + 12).map((t, k) => {
+      const i = idx + k;
+      return {
+        label: t.slice(11, 13) + 'h',
+        temp: Math.round(j.hourly.temperature_2m[i]),
+        wind: Math.round(j.hourly.wind_speed_10m[i]),
+        gust: Math.round(j.hourly.wind_gusts_10m[i]),
+        rain: Math.round(j.hourly.precipitation_probability[i] ?? 0),
+        icon: (COND[j.hourly.weather_code[i]] || ['', 'ph ph-cloud'])[1]
+      };
+    });
+    const hourly = {
+      time: j.hourly.time.slice(0, 48),
+      wind: j.hourly.wind_speed_10m.slice(0, 48).map(Math.round),
+      gust: j.hourly.wind_gusts_10m.slice(0, 48).map(Math.round),
+      rain: j.hourly.precipitation_probability.slice(0, 48).map(x => Math.round(x ?? 0))
+    };
+    const extras = {
+      humidity: Math.round(j.current.relative_humidity_2m),
+      pressure: Math.round(j.current.pressure_msl),
+      cloud: Math.round(j.current.cloud_cover),
+      vis: Math.round((j.current.visibility ?? 0) / 1000),
+      uv: Math.round(j.daily.uv_index_max[0] ?? 0),
+      sunrise: hh(j.daily.sunrise[0]),
+      sunset: hh(j.daily.sunset[0]),
+      sunrise2: hh(j.daily.sunrise[1] || j.daily.sunrise[0]),
+      sunset2: hh(j.daily.sunset[1] || j.daily.sunset[0]),
+      date: j.daily.time[0],
+      date2: j.daily.time[1] || j.daily.time[0]
+    };
+    return { current: j.current, rain: Math.round(j.hourly.precipitation_probability[idx] ?? 0), days, hours, extras, hourly };
+  }
+
+  abrirVisor(i) {
+    this.setState({ visor: i });
+    if (!this.teclado) {
+      this.teclado = e => {
+        if (this.state.visor === null) return;
+        if (e.key === 'Escape') this.setState({ visor: null });
+        if (e.key === 'ArrowRight') this.andar(1);
+        if (e.key === 'ArrowLeft') this.andar(-1);
+      };
+      window.addEventListener('keydown', this.teclado);
+    }
+  }
+
+  todas() { return this.state.publicadas.concat(this.state.novas); }
+
+  andar(d) {
+    const n = this.todas().length;
+    if (!n || this.state.visor === null) return;
+    this.setState({ visor: (this.state.visor + d + n) % n });
+  }
+
+  guardar(list) {
+    this.setState({ novas: list });
+    const marca = parseInt(localStorage.getItem('aero277-fotos-publicadas') || '0', 10);
+    const base = (this.local || []).slice(0, Math.max(0, marca));
+    try { localStorage.setItem('aero277-fotos', JSON.stringify(base.concat(list))); } catch (e) {}
+  }
+
+  async comprimir(file) {
+    const url = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(file); });
+    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+    const max = 2000;
+    if (Math.max(img.width, img.height) <= max) return url;
+    const esc = max / Math.max(img.width, img.height);
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.width * esc); c.height = Math.round(img.height * esc);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return c.toDataURL('image/jpeg', 0.88);
+  }
+
+  async receber(files) {
+    const imgs = Array.from(files || []).filter(f => f.type.startsWith('image/'));
+    if (!imgs.length) return;
+    const lista = this.state.novas.slice();
+    const vistos = new Set(lista.map(p => p.u));
+    let repetidas = 0;
+    for (const f of imgs) {
+      try {
+        const u = await this.comprimir(f);
+        if (vistos.has(u)) { repetidas++; continue; }
+        vistos.add(u);
+        lista.push({ u: u });
+      } catch (e) {}
+    }
+    this.setState({ repetidas: repetidas });
+    this.guardar(lista);
+  }
+
+  aba(k) {
+    const on = this.state.aba === k;
+    return {
+      padding: '9px 18px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '14px',
+      fontFamily: 'var(--font-body)', transition: 'all .18s ease',
+      border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--color-neutral-800)'),
+      background: on ? 'var(--color-accent-900)' : 'transparent',
+      color: on ? 'var(--color-accent-200)' : 'var(--color-neutral-300)'
+    };
+  }
+
+  tab(k) {
+    const on = this.state.overlay === k;
+    return {
+      padding: '7px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '13px',
+      fontFamily: 'var(--font-body)', transition: 'all .18s ease',
+      border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--color-neutral-800)'),
+      background: on ? 'var(--color-accent-900)' : 'transparent',
+      color: on ? 'var(--color-accent-200)' : 'var(--color-neutral-400)'
+    };
+  }
+
+  nivel(w, g, r) {
+    const lim = this.props.limiteVento ?? 21;
+    const raj = this.props.limiteRajada ?? 30;
+    const chuva = this.props.limiteChuva ?? 70;
+    if (r >= chuva || w >= lim || g >= raj) return 2;
+    if (r >= chuva * 0.55 || w >= lim * 0.62 || g >= raj * 0.7) return 1;
+    return 0;
+  }
+
+  janela(ex, hourly) {
+    const cores = ['oklch(0.72 0.10 155)', 'oklch(0.79 0.11 82)', 'oklch(0.62 0.12 25)'];
+    const nomes = ['favorável', 'atenção', 'desfavorável'];
+    const mm = t => parseInt(t.slice(0, 2), 10) * 60 + parseInt(t.slice(3, 5), 10);
+    const agora = new Date();
+    const nowMin = agora.getHours() * 60 + agora.getMinutes();
+    const amanha = nowMin > mm(ex.sunset) + 15;
+    const sr = amanha ? ex.sunrise2 : ex.sunrise;
+    const ss = amanha ? ex.sunset2 : ex.sunset;
+    const dia = amanha ? ex.date2 : ex.date;
+    const h1 = parseInt(sr.slice(0, 2), 10), h2 = parseInt(ss.slice(0, 2), 10);
+    const barras = [];
+    (hourly.time || []).forEach((t, i) => {
+      if (t.slice(0, 10) !== dia) return;
+      const hora = parseInt(t.slice(11, 13), 10);
+      if (hora < h1 || hora > h2) return;
+      const n = this.nivel(hourly.wind[i], hourly.gust[i], hourly.rain[i]);
+      const lim = this.props.limiteVento ?? 21, raj = this.props.limiteRajada ?? 30, ch = this.props.limiteChuva ?? 70;
+      const porVento = hourly.wind[i] >= lim * 0.62 || hourly.gust[i] >= raj * 0.7;
+      const porChuva = hourly.rain[i] >= ch * 0.55;
+      const idx = barras.length;
+      barras.push({
+        label: t.slice(11, 13), cor: cores[n], n: n, hora: hora,
+        nota: t.slice(11, 13) + 'h · ' + nomes[n] + ' · ' + hourly.wind[i] + ' km/h, rajada ' + hourly.gust[i] + ', ' + hourly.rain[i] + '% de chuva',
+        vento: n > 0 && porVento, chuva: n > 0 && porChuva,
+        agora: !amanha && hora === agora.getHours(),
+        sel: () => this.setState({ horaSel: this.state.horaSel === idx ? null : idx }),
+        anel: this.state.horaSel === idx ? 'inset 0 0 0 2px var(--color-neutral-100)'
+          : (this.state.horaSel === null && !amanha && hora === agora.getHours() ? 'inset 0 0 0 2px var(--color-neutral-400)' : 'none'),
+        rotulo: this.state.horaSel === idx ? 'var(--color-neutral-100)' : 'var(--color-neutral-400)'
+      });
+    });
+    let melhor = null, atual = null;
+    barras.forEach((b, i) => {
+      if (b.n === 0) {
+        if (atual && b.hora === barras[i - 1].hora + 1) atual.fim = i;
+        else { if (atual && (!melhor || atual.fim - atual.ini > melhor.fim - melhor.ini)) melhor = atual; atual = { ini: i, fim: i }; }
+      } else {
+        if (atual && (!melhor || atual.fim - atual.ini > melhor.fim - melhor.ini)) melhor = atual;
+        atual = null;
+      }
+    });
+    if (atual && (!melhor || atual.fim - atual.ini > melhor.fim - melhor.ini)) melhor = atual;
+    const quando = amanha ? 'amanhã' : 'hoje';
+    let resumo;
+    if (!barras.length) resumo = 'Sem dados de luz do dia para ' + quando + '.';
+    else if (melhor) {
+      const fmt = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+      const ini = Math.max(barras[melhor.ini].hora * 60, mm(sr));
+      const fim = Math.min((barras[melhor.fim].hora + 1) * 60, mm(ss));
+      resumo = 'Melhor janela ' + quando + ': ' + fmt(ini) + ' às ' + fmt(fim) + '.';
+    }
+    else if (barras.some(b => b.n === 1)) resumo = 'Nenhuma hora plenamente favorável ' + quando + ' — só janelas de atenção.';
+    else resumo = 'Sem janela de voo ' + quando + '.';
+    const iAgora = barras.findIndex(b => b.agora);
+    return { barras: barras, resumo: resumo, iAgora: iAgora,
+      sol: 'Do nascer do sol às ' + sr + ' ao pôr do sol às ' + ss + '.' };
+  }
+
+  verdict(w, g, r) {
+    const n = this.nivel(w, g, r);
+    const chuva = this.props.limiteChuva ?? 70;
+    if (n === 2) {
+      return ['Condições desfavoráveis.', 'oklch(0.68 0.13 25)',
+        r >= chuva ? 'Alta chance de chuva no campo. Guarde os modelos e espere a janela abrir.'
+                   : 'Vento acima do limite confortável, inclusive nas rajadas. Dia de oficina.',
+        'oklch(0.33 0.055 25)'];
+    }
+    if (n === 1) {
+      return ['Condições de atenção.', 'oklch(0.79 0.11 82)',
+        'Vento ou chuva no limite. Dia para pilotos experientes.',
+        'oklch(0.34 0.05 82)'];
+    }
+    return ['Condições favoráveis.', 'oklch(0.76 0.10 155)',
+      'Vento e céu dentro do confortável. Belo dia para voar.',
+      'oklch(0.34 0.045 155)'];
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const src = d || DEMO;
+    const c = src.current;
+    const w = Math.round(c.wind_speed_10m), g = Math.round(c.wind_gusts_10m), r = src.rain;
+    let [vLabel, vColor, vDetail, vGlow] = this.verdict(w, g, r);
+    const ex = src.extras;
+    const mm = t => parseInt(t.slice(0, 2), 10) * 60 + parseInt(t.slice(3, 5), 10);
+    const agoraMin = new Date().getHours() * 60 + new Date().getMinutes();
+    if (agoraMin < mm(ex.sunrise) - 15 || agoraMin > mm(ex.sunset) + 15) {
+      vLabel = 'Sem luz do dia.';
+      vColor = 'var(--color-neutral-300)';
+      vDetail = 'O campo abre com o sol: o próximo nascer do sol é às ' + ex.sunrise + '.';
+      vGlow = '#1e2138';
+    }
+    const cond = COND[c.weather_code] || ['—', 'ph ph-cloud'];
+    const at = this.state.at;
+    const hh = at ? at.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--:--';
+    return {
+      vLabel: this.state.loading && !d ? 'Consultando o céu…' : vLabel,
+      vColor: this.state.loading && !d ? 'var(--color-accent)' : vColor,
+      vDetail: this.state.loading && !d ? 'Buscando as condições atuais para o campo.' : vDetail,
+      vGlow: this.state.loading && !d ? '#1e2138' : vGlow,
+      wind: w, gust: g, temp: Math.round(c.temperature_2m), feels: Math.round(c.apparent_temperature),
+      rain: r, cond: cond[0],
+      windCardinal: CARD[Math.round(c.wind_direction_10m / 22.5) % 16],
+      windArrow: 'rotate(' + ((c.wind_direction_10m + 180) % 360) + 'deg)',
+      windDur: Math.max(1.6, Math.min(9, 110 / (w + 9))).toFixed(1) + 's',
+      days: src.days.map(x => ({ ...x, desc: (COND[x.code] || ['—'])[0], icon: (COND[x.code] || ['', 'ph ph-cloud'])[1] })),
+      hours: src.hours,
+      janela: this.janela(src.extras, src.hourly).barras,
+      janelaRotulo: (() => { const r = this.janela(src.extras, src.hourly).resumo; return r.includes(':') ? r.split(':')[0] + ':' : ''; })(),
+      janelaValor: (() => { const r = this.janela(src.extras, src.hourly).resumo; return r.includes(':') ? r.split(':').slice(1).join(':').trim() : r; })(),
+      detalheHora: (() => {
+        const j = this.janela(src.extras, src.hourly);
+        const b = this.state.horaSel !== null ? j.barras[this.state.horaSel] : j.barras[j.iAgora];
+        if (!b) return '';
+        return this.state.horaSel !== null ? b.label + 'h' : 'Agora · ' + b.label + 'h';
+      })(),
+      detalheTexto: (() => {
+        const j = this.janela(src.extras, src.hourly);
+        const b = this.state.horaSel !== null ? j.barras[this.state.horaSel] : j.barras[j.iAgora];
+        if (!b) return 'Toque numa hora para ver vento, rajada e chuva daquele horário.';
+        return b.nota.split(' · ').slice(1).join(' · ');
+      })(),
+      ex: src.extras,
+      overlay: this.state.overlay,
+      windyUrl: 'https://embed.windy.com/embed2.html?lat=-25.4676635&lon=-50.5682634'
+        + '&detailLat=-25.4676635&detailLon=-50.5682634&zoom=10&level=surface&overlay=' + this.state.overlay
+        + '&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates'
+        + '&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1',
+      setWind: () => this.setState({ overlay: 'wind' }),
+      setGust: () => this.setState({ overlay: 'gust' }),
+      setRain: () => this.setState({ overlay: 'rain' }),
+      setClouds: () => this.setState({ overlay: 'clouds' }),
+      setRadar: () => this.setState({ overlay: 'radar' }),
+      styleWind: this.tab('wind'), styleGust: this.tab('gust'), styleRain: this.tab('rain'), styleClouds: this.tab('clouds'), styleRadar: this.tab('radar'),
+      status: this.state.offline ? 'Sem conexão com o serviço de previsão — os valores acima são de exemplo.' : 'Atualizado às ' + hh + ' · atualiza sozinho a cada 10 minutos.',
+      hoje: (dt => dt.charAt(0).toUpperCase() + dt.slice(1))(new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })),
+      agora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      verEnvio: this.admin,
+      verClima: this.state.aba === 'clima',
+      verFotos: this.state.aba === 'fotos',
+      abaClima: () => this.setState({ aba: 'clima' }),
+      abaFotos: () => this.setState({ aba: 'fotos' }),
+      styleAbaClima: this.aba('clima'),
+      styleAbaFotos: this.aba('fotos'),
+      onDragOver: e => { e.preventDefault(); if (!this.state.sobre) this.setState({ sobre: true }); },
+      onDragLeave: () => this.setState({ sobre: false }),
+      onDrop: e => { e.preventDefault(); this.setState({ sobre: false }); this.receber(e.dataTransfer.files); },
+      onPick: e => { this.receber(e.target.files); e.target.value = ''; },
+      styleZona: {
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px',
+        padding: '30px 20px', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'center',
+        border: '1px dashed ' + (this.state.sobre ? 'var(--color-accent)' : 'var(--color-neutral-700)'),
+        background: this.state.sobre ? 'var(--color-accent-900)' : 'var(--color-surface)',
+        transition: 'all .18s ease'
+      },
+      zonaTexto: this.state.sobre ? 'Solte as fotos aqui' : 'Arraste as fotos ou clique para escolher',
+      fotos: this.todas().map((p, i) => ({
+        u: p.u,
+        abrir: e => { e.preventDefault(); this.abrirVisor(i); },
+        rm: e => {
+          e.preventDefault(); e.stopPropagation();
+          const base = this.state.publicadas.length;
+          if (i < base) return;
+          const l = this.state.novas.slice(); l.splice(i - base, 1); this.guardar(l);
+        }
+      })),
+      temFotos: this.todas().length > 0,
+      contagem: this.todas().length + (this.todas().length === 1 ? ' foto' : ' fotos')
+        + (this.state.repetidas ? ' · ' + this.state.repetidas + (this.state.repetidas === 1 ? ' repetida ignorada' : ' repetidas ignoradas') : ''),
+      limpar: e => { e.preventDefault(); this.guardar([]); },
+      visorPosN: this.todas().length,
+      exportar: e => {
+        e.preventDefault();
+        const b = new Blob([JSON.stringify({ fotos: this.state.novas })], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = 'fotos.json';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      },
+      visorAberto: this.state.visor !== null && !!this.todas()[this.state.visor],
+      visorStyle: {
+        width: '100%', height: '100%', borderRadius: 'var(--radius-md)',
+        backgroundImage: this.state.visor !== null && this.todas()[this.state.visor] ? 'url(' + this.todas()[this.state.visor].u + ')' : 'none',
+        backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'
+      },
+      visorPos: this.state.visor !== null ? (this.state.visor + 1) + ' / ' + this.todas().length : '',
+      fechar: () => this.setState({ visor: null }),
+      proxima: e => { e.stopPropagation(); this.andar(1); },
+      anterior: e => { e.stopPropagation(); this.andar(-1); },
+      onTouchStart: e => { this.tx = e.touches[0].clientX; },
+      onTouchEnd: e => {
+        if (this.tx === undefined) return;
+        const dx = e.changedTouches[0].clientX - this.tx;
+        this.tx = undefined;
+        if (Math.abs(dx) > 45) this.andar(dx < 0 ? 1 : -1);
+      },
+      reload: () => this.load()
+    };
+  }
+}
+</script>
+</body>
+</html>
