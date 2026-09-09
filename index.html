@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Condições de voo Aeropolaco">
 <meta property="og:description" content="Vento, chuva e janela de voo no campo do Aero 277 — Fernandes Pinheiro, PR.">
@@ -233,7 +234,7 @@ a:hover { color: var(--color-accent-200); }
       <button onClick="{{ radarUltima }}" style="{{ styleRadarUltima }}">Última imagem</button>
       <button onClick="{{ radarAnimar }}" style="{{ styleRadarAnima }}">Animação</button>
     </div>
-    <div style="{{ radarStyle }}"></div>
+    <div style="width: 100%; aspect-ratio: 980 / 672; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--color-surface);">{{ radarImg }}</div>
     <div style="font-size: 13px; color: var(--color-neutral-400);">Imagem do mosaico de radares do SIMEPAR, atualizada a cada poucos minutos. Tons de amarelo e vermelho indicam chuva mais intensa.</div>
   </div>
 
@@ -737,12 +738,12 @@ class Component extends DCLogic {
       status: this.state.offline ? 'Sem conexão com o serviço de previsão — os valores acima são de exemplo.' : 'Atualizado às ' + hh + ' · atualiza sozinho a cada 10 minutos.',
       hoje: (dt => dt.charAt(0).toUpperCase() + dt.slice(1))(new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })),
       agora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-      radarStyle: {
-        width: '100%', aspectRatio: '980 / 672', borderRadius: 'var(--radius-lg)',
-        boxShadow: 'var(--shadow-sm)', background: 'var(--color-surface)',
-        backgroundImage: 'url(https://lb01.simepar.br/riak/pgw-radar/product' + this.state.radarFrame + '.jpeg?t=' + this.state.radarStamp + ')',
-        backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'
-      },
+      radarImg: React.createElement('img', {
+        src: 'https://lb01.simepar.br/riak/pgw-radar/product' + this.state.radarFrame + '.jpeg?t=' + this.state.radarStamp,
+        alt: 'Radar SIMEPAR — mosaico do Paraná',
+        referrerPolicy: 'no-referrer',
+        style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block' }
+      }),
       radarUltima: () => this.setState({ radarPlay: false, radarFrame: 1, radarStamp: Date.now() }),
       radarAnimar: () => this.setState(s => ({ radarPlay: !s.radarPlay })),
       styleRadarUltima: this.tabOn(!this.state.radarPlay),
