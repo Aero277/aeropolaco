@@ -228,6 +228,16 @@ a:hover { color: var(--color-accent-200); }
   </div>
 
   <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Radar SIMEPAR · mosaico do Paraná</div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <button onClick="{{ radarUltima }}" style="{{ styleRadarUltima }}">Última imagem</button>
+      <button onClick="{{ radarAnimar }}" style="{{ styleRadarAnima }}">Animação</button>
+    </div>
+    <div style="{{ radarStyle }}"></div>
+    <div style="font-size: 13px; color: var(--color-neutral-400);">Imagem do mosaico de radares do SIMEPAR, atualizada a cada poucos minutos. Tons de amarelo e vermelho indicam chuva mais intensa.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
     <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Outras condições</div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 10px;">
       <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
@@ -384,7 +394,7 @@ const DEMO = {
 };
 
 class Component extends DCLogic {
-  state = { data: null, offline: false, loading: true, at: null, overlay: 'wind', horaSel: null, aba: 'clima', fotos: [], sobre: false, visor: null, repetidas: 0, publicadas: [], novas: [] };
+  state = { data: null, offline: false, loading: true, at: null, overlay: 'wind', horaSel: null, aba: 'clima', fotos: [], sobre: false, visor: null, repetidas: 0, publicadas: [], novas: [], radarFrame: 1, radarPlay: false, radarStamp: Date.now() };
 
   componentDidMount() {
     this.admin = !/github\.io|\bpublic\b/.test(location.hostname + location.hash);
@@ -410,10 +420,18 @@ class Component extends DCLogic {
     this.load();
     this.clock = setInterval(() => this.forceUpdate(), 20000);
     this.timer = setInterval(() => this.load(), 600000);
+    this.radarTimer = setInterval(() => this.radarTick(), 700);
+    this.radarRefresh = setInterval(() => this.setState({ radarStamp: Date.now() }), 300000);
   }
+  radarTick() {
+    if (!this.state.radarPlay) return;
+    this.setState(s => ({ radarFrame: s.radarFrame <= 1 ? 8 : s.radarFrame - 1 }));
+  }
+
   componentWillUnmount() {
     clearInterval(this.timer); clearInterval(this.clock);
     if (this.teclado) window.removeEventListener('keydown', this.teclado);
+    clearInterval(this.radarTimer); clearInterval(this.radarRefresh);
   }
 
   async load() {
@@ -548,6 +566,16 @@ class Component extends DCLogic {
       border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--color-neutral-800)'),
       background: on ? 'var(--color-accent-900)' : 'transparent',
       color: on ? 'var(--color-accent-200)' : 'var(--color-neutral-300)'
+    };
+  }
+
+  tabOn(on) {
+    return {
+      padding: '7px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '13px',
+      fontFamily: 'var(--font-body)', transition: 'all .18s ease',
+      border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--color-neutral-800)'),
+      background: on ? 'var(--color-accent-900)' : 'transparent',
+      color: on ? 'var(--color-accent-200)' : 'var(--color-neutral-400)'
     };
   }
 
@@ -709,6 +737,16 @@ class Component extends DCLogic {
       status: this.state.offline ? 'Sem conexão com o serviço de previsão — os valores acima são de exemplo.' : 'Atualizado às ' + hh + ' · atualiza sozinho a cada 10 minutos.',
       hoje: (dt => dt.charAt(0).toUpperCase() + dt.slice(1))(new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })),
       agora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      radarStyle: {
+        width: '100%', aspectRatio: '980 / 672', borderRadius: 'var(--radius-lg)',
+        boxShadow: 'var(--shadow-sm)', background: 'var(--color-surface)',
+        backgroundImage: 'url(https://lb01.simepar.br/riak/pgw-radar/product' + this.state.radarFrame + '.jpeg?t=' + this.state.radarStamp + ')',
+        backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'
+      },
+      radarUltima: () => this.setState({ radarPlay: false, radarFrame: 1, radarStamp: Date.now() }),
+      radarAnimar: () => this.setState(s => ({ radarPlay: !s.radarPlay })),
+      styleRadarUltima: this.tabOn(!this.state.radarPlay),
+      styleRadarAnima: this.tabOn(this.state.radarPlay),
       verEnvio: this.admin,
       verClima: this.state.aba === 'clima',
       verFotos: this.state.aba === 'fotos',
