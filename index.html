@@ -302,7 +302,7 @@ a:hover { color: var(--color-accent-200); }
       <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
         <div style="display: grid; grid-template-columns: 52px 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 13px 2px; border-top: 1px solid var(--color-neutral-900); font-size: 14px;">
           <span style="color: var(--color-neutral-200);">{{ d.label }}</span>
-          <i class="{{ d.icon }}" style="font-size: 19px; color: var(--color-accent-400);"></i>
+          <i class="{{ d.icon }}" style="font-size: 19px; color: {{ d.iconCor }};"></i>
           <span style="color: var(--color-neutral-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ d.desc }} · {{ d.rain }}% · {{ d.wind }} km/h</span>
           <span style="color: var(--color-neutral-200); font-variant-numeric: tabular-nums;">{{ d.max }}° <span style="color: var(--color-neutral-600);">{{ d.min }}°</span></span>
         </div>
@@ -734,7 +734,13 @@ class Component extends DCLogic {
       windCardinal: CARD[Math.round(c.wind_direction_10m / 22.5) % 16],
       windArrow: 'rotate(' + ((c.wind_direction_10m + 180) % 360) + 'deg)',
       windDur: Math.max(1.6, Math.min(9, 110 / (w + 9))).toFixed(1) + 's',
-      days: src.days.map(x => ({ ...x, desc: (COND[x.code] || ['—'])[0], icon: (COND[x.code] || ['', 'ph ph-cloud'])[1] })),
+      days: src.days.map(x => {
+        const ic = (COND[x.code] || ['', 'ph ph-cloud'])[1];
+        let cor = '#8697ac';
+        if (/rain|snow|lightning/.test(ic)) cor = 'var(--color-accent-300)';
+        else if (/sun/.test(ic)) cor = '#ffa53d';
+        return { ...x, desc: (COND[x.code] || ['—'])[0], icon: ic, iconCor: cor };
+      }),
       hours: src.hours,
       janela: this.janela(src.extras, src.hourly).barras,
       janelaRotulo: (() => { const r = this.janela(src.extras, src.hourly).resumo; return r.includes(':') ? r.split(':')[0] + ':' : ''; })(),
