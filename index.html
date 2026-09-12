@@ -53,24 +53,20 @@ a { color: var(--color-accent-300); text-decoration: none; }
 a:hover { color: var(--color-accent-200); }
 </style>
 </helmet>
-<div style="min-height:100vh; background: radial-gradient(120% 55% at 50% 0%, {{ vGlow }} 0%, transparent 62%), var(--color-bg); transition: background 1.2s ease; color:var(--color-text); font-family:var(--font-body); padding:26px 16px 48px; display:flex; justify-content:center;">
+<div style="min-height:100vh; background: radial-gradient(120% 55% at 50% 0%, {{ vGlow }} 0%, transparent 62%), var(--color-bg); transition: background 1.2s ease; color:var(--color-text); font-family:var(--font-body); padding:22px 14px 44px; display:flex; justify-content:center;">
 <div style="width:100%; max-width:560px; display:flex; flex-direction:column; gap:20px;">
 
-  <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-    <img src="assets/aeropolaco-logo.png" alt="Aeropolaco" style="width:74px; height:74px; flex:0 0 74px; object-fit:contain;">
-    <div style="display:flex; flex-direction:column; gap:3px; min-width:0; flex:1 1 180px;">
-      <div style="font-family:var(--font-heading); font-weight:600; font-size:28px; line-height:1.05; letter-spacing:-0.02em; color:var(--color-neutral-100);">Aero 277 · Aeropolaco</div>
-      <div style="font-size:14px; color:var(--color-neutral-400);">Fernandes Pinheiro, Paraná</div>
-    </div>
-    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:1px; padding:9px 15px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);">
-      <span style="font-size:12px; color:var(--color-neutral-400);">{{ hoje }}</span>
-      <span style="font-family:var(--font-heading); font-weight:600; font-size:22px; color:var(--color-neutral-100); font-variant-numeric:tabular-nums;">{{ agora }}</span>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center;">
+    <img src="assets/aeropolaco-logo.png" alt="Aeropolaco" style="width:clamp(72px,22vw,96px); height:clamp(72px,22vw,96px); object-fit:contain;">
+    <div style="font-family:var(--font-heading); font-weight:600; font-size:clamp(26px,7.4vw,36px); line-height:1.04; letter-spacing:-0.02em; color:var(--color-neutral-100);">Aero 277 · Aeropolaco</div>
+    <div style="font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--color-neutral-400);">Fernandes Pinheiro · Paraná</div>
+    <div style="display:flex; gap:8px; margin-top:3px; flex-wrap:wrap; justify-content:center;">
+      <span style="padding:6px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); font-size:12px; color:var(--color-neutral-300);">{{ hoje }}</span>
+      <span style="padding:6px 14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); font-family:var(--font-heading); font-weight:600; font-size:15px; color:var(--color-neutral-100); font-variant-numeric:tabular-nums;">{{ agora }}</span>
     </div>
   </div>
 
-  
-
-  <div style="display: flex; gap: 8px;">
+  <div style="display: flex; gap: 8px; justify-content: center;">
     <button onClick="{{ abaClima }}" style="{{ styleAbaClima }}">Clima</button>
     <button onClick="{{ abaFotos }}" style="{{ styleAbaFotos }}">Fotos</button>
   </div>
@@ -78,7 +74,7 @@ a:hover { color: var(--color-accent-200); }
   <sc-if value="{{ verClima }}" hint-placeholder-val="{{ true }}">
   <div style="display:flex; flex-direction:column; gap:16px;">
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Referência da pista</div>
     <div style="position:relative; width:100%; aspect-ratio:16/10; border-radius:16px; overflow:hidden; background:var(--color-surface); box-shadow:0 24px 60px -32px #000;">
       <image-slot id="pista-aero277" shape="rect" fit="cover" src="assets/pista-aero277.webp" placeholder="Arraste aqui a foto aérea ou o desenho da pista"></image-slot>
@@ -185,7 +181,7 @@ a:hover { color: var(--color-accent-200); }
   </div>
 
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Janela de voo</div>
     <div style="display: flex; gap: 3px; align-items: flex-end;">
       <sc-for list="{{ janela }}" as="b" hint-placeholder-count="13">
@@ -234,7 +230,7 @@ a:hover { color: var(--color-accent-200); }
     </div>
   </div>
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Mapa Windy · campo do Aero 277</div>
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <button onClick="{{ setWind }}" style="{{ styleWind }}">Vento</button>
@@ -249,7 +245,7 @@ a:hover { color: var(--color-accent-200); }
     <div style="font-size: 13px; color: var(--color-neutral-400);">Arraste o mapa e use a linha do tempo do Windy para ver como o vento entra na pista nas próximas horas.</div>
   </div>
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Radar SIMEPAR · mosaico do Paraná</div>
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <button onClick="{{ radarUltima }}" style="{{ styleRadarUltima }}">Última imagem</button>
@@ -266,7 +262,7 @@ a:hover { color: var(--color-accent-200); }
     <div style="font-size: 13px; color: var(--color-neutral-400);">Imagem do mosaico de radares do SIMEPAR, atualizada a cada poucos minutos. Tons de amarelo e vermelho indicam chuva mais intensa.</div>
   </div>
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Outras condições</div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 10px;">
       <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
@@ -296,7 +292,7 @@ a:hover { color: var(--color-accent-200); }
     </div>
   </div>
 
-  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Próximos dias</div>
     <div style="display: flex; flex-direction: column;">
       <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
@@ -337,7 +333,7 @@ a:hover { color: var(--color-accent-200); }
         </label>
       </sc-if>
       <sc-if value="{{ temFotos }}" hint-placeholder-val="{{ false }}">
-        <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+        <div style="display:flex; flex-direction:column; gap:12px; padding:clamp(14px,4vw,18px); border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
           <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}">
             <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
               <span style="font-size: 13px; color: var(--color-neutral-400);">{{ contagem }}</span>
@@ -590,7 +586,7 @@ class Component extends DCLogic {
   aba(k) {
     const on = this.state.aba === k;
     return {
-      padding: '9px 18px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '14px',
+      padding: '11px 22px', borderRadius: '999px', cursor: 'pointer', fontSize: '14px',
       fontFamily: 'var(--font-body)', transition: 'all .18s ease',
       border: '1px solid ' + (on ? 'var(--color-accent)' : 'var(--color-neutral-800)'),
       background: on ? 'var(--color-accent-900)' : 'transparent',
