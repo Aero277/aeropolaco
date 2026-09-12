@@ -26,32 +26,49 @@
 <link rel="stylesheet" href="ds/styles.css">
 <script src="ds/bundle.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Karla:wght@300;400;500&display=swap">
 <script src="./image-slot.js"></script>
 <style>
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
 @keyframes drift { from { transform: translateY(440px); } to { transform: translateY(-440px); } }
-body { margin: 0; background: var(--color-bg); }
+:root, body {
+    --font-heading:"Familjen Grotesk",system-ui,sans-serif; --font-body:"Karla",system-ui,sans-serif;
+    --color-bg:#070a12; --color-text:#eaf0f8; --color-surface:#0f1420;
+    --color-neutral-100:#f5f8fc; --color-neutral-200:#ccd6e4; --color-neutral-300:#a3b1c4;
+    --color-neutral-400:#78899f; --color-neutral-500:#5f7087; --color-neutral-600:#465569;
+    --color-neutral-700:#2e3a4c; --color-neutral-800:#1f2938; --color-neutral-900:#141c28;
+    --color-accent:#5cc8ff; --color-accent-200:#a8e2ff; --color-accent-300:#7fd6ff; --color-accent-400:#5cc8ff; --color-accent-900:#06243a;
+    --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
+    --shadow-sm:0 10px 30px -18px #000; --shadow-md:0 18px 44px -22px #000; --shadow-lg:0 30px 70px -30px #000;
+    --ok:#45d6a0; --warn:#ffc861; --bad:#ff6b6b; --ok-ink:#7ae7bf; --warn-ink:#ffd88f; --bad-ink:#ff9a9a;
+    --ok-bg:#0c2b24; --warn-bg:#2d2410; --bad-bg:#2d1418;
+    --scrim:rgba(7,10,18,.82); --scrim-soft:rgba(7,10,18,.5); --shade:rgba(0,0,0,.65);
+    --on-chip:rgba(7,10,18,.85); --dim:rgba(234,240,248,.78); --visor:rgba(4,6,11,.94); --visor-btn:rgba(30,40,56,.92);
+  }
+  body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
+  body { background-image: radial-gradient(80% 40% at 110% 6%, rgba(92,200,255,.12), transparent 62%), radial-gradient(70% 35% at -10% 30%, rgba(92,200,255,.07), transparent 60%); background-attachment: fixed; }
 a { color: var(--color-accent-300); text-decoration: none; }
 a:hover { color: var(--color-accent-200); }
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(125% 62% at 50% 0%, {{ vGlow }} 0%, var(--color-bg) 62%); transition: background 1.2s ease; color: var(--color-text); font-family: var(--font-body); padding: 34px 20px 44px; display: flex; justify-content: center;">
-<div style="width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 26px;">
+<div style="min-height:100vh; background: radial-gradient(120% 55% at 50% 0%, {{ vGlow }} 0%, transparent 62%), var(--color-bg); transition: background 1.2s ease; color:var(--color-text); font-family:var(--font-body); padding:26px 16px 48px; display:flex; justify-content:center;">
+<div style="width:100%; max-width:560px; display:flex; flex-direction:column; gap:20px;">
 
-  <div style="display: flex; align-items: center; gap: 18px;">
-    <img src="assets/aeropolaco-logo.png" alt="Aeropolaco" style="width: 104px; height: 104px; flex: 0 0 104px; object-fit: contain;">
-    <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-      <div style="font-family: var(--font-heading); font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -0.02em;">Aero 277 · Aeropolaco</div>
-      <div style="font-size: 14px; color: var(--color-neutral-300);">Fernandes Pinheiro, Paraná</div>
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 3px;">
-        <span style="font-size: 14px; color: var(--color-neutral-400);">{{ hoje }}</span>
-        <span style="font-family: var(--font-heading); font-weight: 500; font-size: 16px; color: var(--color-accent-300); font-variant-numeric: tabular-nums;">{{ agora }}</span>
-      </div>
+  <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <img src="assets/aeropolaco-logo.png" alt="Aeropolaco" style="width:74px; height:74px; flex:0 0 74px; object-fit:contain;">
+    <div style="display:flex; flex-direction:column; gap:3px; min-width:0; flex:1 1 180px;">
+      <div style="font-family:var(--font-heading); font-weight:600; font-size:28px; line-height:1.05; letter-spacing:-0.02em; color:var(--color-neutral-100);">Aero 277 · Aeropolaco</div>
+      <div style="font-size:14px; color:var(--color-neutral-400);">Fernandes Pinheiro, Paraná</div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:1px; padding:9px 15px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);">
+      <span style="font-size:12px; color:var(--color-neutral-400);">{{ hoje }}</span>
+      <span style="font-family:var(--font-heading); font-weight:600; font-size:22px; color:var(--color-neutral-100); font-variant-numeric:tabular-nums;">{{ agora }}</span>
     </div>
   </div>
 
-  <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--color-neutral-800) 48px, var(--color-neutral-800) calc(100% - 48px), transparent);"></div>
+  
 
   <div style="display: flex; gap: 8px;">
     <button onClick="{{ abaClima }}" style="{{ styleAbaClima }}">Clima</button>
@@ -59,19 +76,11 @@ a:hover { color: var(--color-accent-200); }
   </div>
 
   <sc-if value="{{ verClima }}" hint-placeholder-val="{{ true }}">
-  <div style="display: flex; flex-direction: column; gap: 26px;">
+  <div style="display:flex; flex-direction:column; gap:16px;">
 
-  <div style="display: flex; flex-direction: column; gap: 10px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Dá pra voar agora?</div>
-    <div style="display: flex; align-items: baseline; gap: 12px;">
-      <span style="width: 12px; height: 12px; border-radius: 50%; flex: 0 0 12px; background: {{ vColor }}; box-shadow: 0 0 16px {{ vColor }}; animation: pulse 2.6s ease-in-out infinite;"></span>
-      <span style="font-family: var(--font-heading); font-weight: 500; font-size: 31px; line-height: 1.15; letter-spacing: -0.02em; color: {{ vColor }};">{{ vLabel }}</span>
-    </div>
-    <div style="font-size: 15px; color: var(--color-neutral-300); max-width: 36ch; text-wrap: pretty;">{{ vDetail }}</div>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Referência da pista</div>
-    <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: var(--color-surface);">
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Referência da pista</div>
+    <div style="position:relative; width:100%; aspect-ratio:16/10; border-radius:16px; overflow:hidden; background:var(--color-surface); box-shadow:0 24px 60px -32px #000;">
       <image-slot id="pista-aero277" shape="rect" fit="cover" src="assets/pista-aero277.webp" placeholder="Arraste aqui a foto aérea ou o desenho da pista"></image-slot>
       <div style="position: absolute; inset: -30%; pointer-events: none; transform: {{ windArrow }}; --wd: {{ windDur }}; transition: transform .8s ease;">
         <span style="position: absolute; left: 10.0%; top: 16%; width: 3px; height: 40px; opacity: 0.32;">
@@ -153,28 +162,37 @@ a:hover { color: var(--color-accent-200); }
           <span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: linear-gradient(180deg, transparent, var(--color-accent-200), transparent); animation: drift var(--wd, 5s) linear infinite; animation-delay: calc(var(--wd, 5s) * -0.451);"></span>
         </span>
       </div>
-      <div style="position: absolute; left: 12px; top: 12px; pointer-events: none; padding: 6px 10px; border-radius: var(--radius-md); background: rgba(22,24,38,0.82); box-shadow: var(--shadow-sm); font-size: 13px; color: var(--color-neutral-200);">Vento de {{ windCardinal }} · {{ wind }} km/h · rajadas {{ gust }} km/h</div>
-      <div style="position: absolute; right: 14px; top: 14px; pointer-events: none; width: 92px; height: 92px; border-radius: 50%; border: 1px solid var(--color-neutral-700); background: radial-gradient(circle, rgba(22,24,38,0.88), rgba(22,24,38,0.62));">
+      <div style="position: absolute; left: 12px; top: 12px; pointer-events: none; padding: 6px 10px; border-radius: var(--radius-md); background: var(--scrim); box-shadow: var(--shadow-sm); font-size: 13px; color: var(--color-neutral-200);">Vento de {{ windCardinal }} · {{ wind }} km/h · rajadas {{ gust }} km/h</div>
+      <div style="position: absolute; right: 14px; top: 14px; pointer-events: none; width: 92px; height: 92px; border-radius: 50%; border: 1px solid var(--color-neutral-700); background: radial-gradient(circle, var(--scrim), var(--scrim-soft));">
         <span style="position: absolute; top: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--color-neutral-300);">N</span>
         <span style="position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--color-neutral-400);">S</span>
         <span style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--color-neutral-400);">O</span>
         <span style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); font-size: 10px; color: var(--color-neutral-400);">L</span>
         <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform: {{ windArrow }}; transition: transform .6s ease;">
-          <i class="ph ph-arrow-up" style="font-size: 40px; color: var(--color-accent-200); line-height: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.7);"></i>
+          <i class="ph ph-arrow-up" style="font-size: 40px; color: var(--color-accent-200); line-height: 1; text-shadow: 0 2px 8px var(--shade);"></i>
         </div>
       </div>
     </div>
   </div>
 
+  <div style="display:flex; flex-direction:column; gap:12px; padding:22px; border-radius:24px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 24px 60px -34px {{ vColor }};">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="width:10px; height:10px; border-radius:50%; flex:0 0 10px; background:{{ vColor }}; box-shadow:0 0 18px {{ vColor }}; animation:pulse 2.6s ease-in-out infinite;"></span>
+      <span style="font-size:13px; color:var(--color-neutral-400);">Dá pra voar agora?</span>
+    </div>
+    <div style="font-family:var(--font-heading); font-weight:600; font-size:34px; line-height:1.08; letter-spacing:-0.025em; color:{{ vColor }};">{{ vLabel }}</div>
+    <div style="font-size:15px; line-height:1.6; color:var(--color-neutral-300); max-width:40ch; text-wrap:pretty;">{{ vDetail }}</div>
+  </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Janela de voo</div>
+
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Janela de voo</div>
     <div style="display: flex; gap: 3px; align-items: flex-end;">
       <sc-for list="{{ janela }}" as="b" hint-placeholder-count="13">
         <div onClick="{{ b.sel }}" style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; cursor: pointer;" title="{{ b.nota }}">
           <div style="width: 100%; height: 34px; border-radius: var(--radius-sm); background: {{ b.cor }}; box-shadow: {{ b.anel }}; display: flex; align-items: center; justify-content: center; gap: 2px;">
-            <sc-if value="{{ b.vento }}" hint-placeholder-val="{{ false }}"><i class="ph ph-wind" style="font-size: 13px; color: rgba(20,20,26,0.78);"></i></sc-if>
-            <sc-if value="{{ b.chuva }}" hint-placeholder-val="{{ false }}"><i class="ph ph-drop" style="font-size: 13px; color: rgba(20,20,26,0.78);"></i></sc-if>
+            <sc-if value="{{ b.vento }}" hint-placeholder-val="{{ false }}"><i class="ph ph-wind" style="font-size: 13px; color: var(--on-chip);"></i></sc-if>
+            <sc-if value="{{ b.chuva }}" hint-placeholder-val="{{ false }}"><i class="ph ph-drop" style="font-size: 13px; color: var(--on-chip);"></i></sc-if>
           </div>
           <span style="font-size: 11px; color: {{ b.rotulo }}; font-variant-numeric: tabular-nums;">{{ b.label }}</span>
         </div>
@@ -186,9 +204,9 @@ a:hover { color: var(--color-accent-200); }
         <span style="font-family: var(--font-heading); font-weight: 500; font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; color: var(--color-neutral-100);">{{ janelaValor }}</span>
       </span>
       <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 11px; color: var(--color-neutral-500);">
-        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.72 0.10 155);"></span>ok</span>
-        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.79 0.11 82);"></span>atenção</span>
-        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: oklch(0.62 0.12 25);"></span>não</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--ok);"></span>ok</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--warn);"></span>atenção</span>
+        <span style="display: inline-flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--bad);"></span>não</span>
       </span>
     </div>
     <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 22px;">
@@ -216,8 +234,8 @@ a:hover { color: var(--color-accent-200); }
     </div>
   </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Mapa Windy · campo do Aero 277</div>
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Mapa Windy · campo do Aero 277</div>
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <button onClick="{{ setWind }}" style="{{ styleWind }}">Vento</button>
       <button onClick="{{ setGust }}" style="{{ styleGust }}">Rajadas</button>
@@ -231,8 +249,8 @@ a:hover { color: var(--color-accent-200); }
     <div style="font-size: 13px; color: var(--color-neutral-400);">Arraste o mapa e use a linha do tempo do Windy para ver como o vento entra na pista nas próximas horas.</div>
   </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Radar SIMEPAR · mosaico do Paraná</div>
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Radar SIMEPAR · mosaico do Paraná</div>
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <button onClick="{{ radarUltima }}" style="{{ styleRadarUltima }}">Última imagem</button>
       <button onClick="{{ radarAnimar }}" style="{{ styleRadarAnima }}">Animação</button>
@@ -241,15 +259,15 @@ a:hover { color: var(--color-accent-200); }
       {{ radarImg }}
       <div style="position: absolute; left: 58.0%; top: 59.2%; width: 0; height: 0; pointer-events: none;">
         <span style="position: absolute; left: -13px; top: -13px; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--color-accent); opacity: 0.7;"></span>
-        <span style="position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent-200); box-shadow: 0 0 0 2px rgba(22,24,38,0.85);"></span>
-        <span style="position: absolute; left: 7px; top: 5px; padding: 1px 6px; border-radius: var(--radius-sm); white-space: nowrap; font-size: 9.5px; letter-spacing: 0.04em; color: rgba(233,233,237,0.72); background: rgba(22,24,38,0.55);">Pista</span>
+        <span style="position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent-200); box-shadow: 0 0 0 2px var(--scrim);"></span>
+        <span style="position: absolute; left: 7px; top: 5px; padding: 1px 6px; border-radius: var(--radius-sm); white-space: nowrap; font-size: 9.5px; letter-spacing: 0.04em; color: var(--dim); background: var(--scrim-soft);">Pista</span>
       </div>
     </div>
     <div style="font-size: 13px; color: var(--color-neutral-400);">Imagem do mosaico de radares do SIMEPAR, atualizada a cada poucos minutos. Tons de amarelo e vermelho indicam chuva mais intensa.</div>
   </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Outras condições</div>
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Outras condições</div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 10px;">
       <div style="background: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: var(--radius-md); padding: 13px; display: flex; flex-direction: column; gap: 5px;">
         <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-neutral-500);"><i class="ph ph-drop-half" style="font-size: 14px;"></i>Umidade</div>
@@ -278,8 +296,8 @@ a:hover { color: var(--color-accent-200); }
     </div>
   </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Próximos dias</div>
+  <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+    <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Próximos dias</div>
     <div style="display: flex; flex-direction: column;">
       <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
         <div style="display: grid; grid-template-columns: 52px 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 13px 2px; border-top: 1px solid var(--color-neutral-900); font-size: 14px;">
@@ -307,7 +325,7 @@ a:hover { color: var(--color-accent-200); }
   <sc-if value="{{ verFotos }}" hint-placeholder-val="{{ false }}">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div style="display: flex; flex-direction: column; gap: 6px;">
-        <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-400);">Fotos do campo</div>
+        <div style="font-family: var(--font-heading); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--color-neutral-400);">Fotos do campo</div>
         <div style="font-size: 14px; color: var(--color-neutral-300); text-wrap: pretty;">Voos, modelos e encontros no Aero 277.</div>
       </div>
       <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}">
@@ -319,7 +337,7 @@ a:hover { color: var(--color-accent-200); }
         </label>
       </sc-if>
       <sc-if value="{{ temFotos }}" hint-placeholder-val="{{ false }}">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:20px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
           <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}">
             <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
               <span style="font-size: 13px; color: var(--color-neutral-400);">{{ contagem }}</span>
@@ -333,7 +351,7 @@ a:hover { color: var(--color-accent-200); }
             <sc-for list="{{ fotos }}" as="p" hint-placeholder-count="6">
               <div onClick="{{ p.abrir }}" style="position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); box-shadow: var(--shadow-sm); cursor: pointer;">
                 <img src="{{ p.u }}" alt="Foto do campo" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}"><button onClick="{{ p.rm }}" title="Remover" style="position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(22,24,38,0.82); color: var(--color-neutral-200);"><i class="ph ph-x" style="font-size: 14px;"></i></button></sc-if>
+                <sc-if value="{{ verEnvio }}" hint-placeholder-val="{{ true }}"><button onClick="{{ p.rm }}" title="Remover" style="position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: var(--scrim); color: var(--color-neutral-200);"><i class="ph ph-x" style="font-size: 14px;"></i></button></sc-if>
               </div>
             </sc-for>
           </div>
@@ -344,11 +362,11 @@ a:hover { color: var(--color-accent-200); }
   </sc-if>
 
   <sc-if value="{{ visorAberto }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ fechar }}" onTouchStart="{{ onTouchStart }}" onTouchEnd="{{ onTouchEnd }}" style="position: fixed; inset: 0; z-index: 90; background: rgba(15,16,26,0.94); display: flex; align-items: center; justify-content: center; padding: 24px;">
+    <div onClick="{{ fechar }}" onTouchStart="{{ onTouchStart }}" onTouchEnd="{{ onTouchEnd }}" style="position: fixed; inset: 0; z-index: 90; background: var(--visor); display: flex; align-items: center; justify-content: center; padding: 24px;">
       <div role="img" aria-label="Foto do campo" style="{{ visorStyle }}"></div>
-      <button onClick="{{ anterior }}" title="Anterior" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-caret-left" style="font-size: 22px;"></i></button>
-      <button onClick="{{ proxima }}" title="Próxima" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-caret-right" style="font-size: 22px;"></i></button>
-      <button onClick="{{ fechar }}" title="Fechar" style="position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: rgba(35,37,50,0.9); color: var(--color-neutral-100);"><i class="ph ph-x" style="font-size: 18px;"></i></button>
+      <button onClick="{{ anterior }}" title="Anterior" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: var(--visor-btn); color: var(--color-neutral-100);"><i class="ph ph-caret-left" style="font-size: 22px;"></i></button>
+      <button onClick="{{ proxima }}" title="Próxima" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: var(--visor-btn); color: var(--color-neutral-100);"><i class="ph ph-caret-right" style="font-size: 22px;"></i></button>
+      <button onClick="{{ fechar }}" title="Fechar" style="position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer; background: var(--visor-btn); color: var(--color-neutral-100);"><i class="ph ph-x" style="font-size: 18px;"></i></button>
       <span style="position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--color-neutral-400); font-variant-numeric: tabular-nums;">{{ visorPos }}</span>
     </div>
   </sc-if>
@@ -611,7 +629,7 @@ class Component extends DCLogic {
   }
 
   janela(ex, hourly) {
-    const cores = ['oklch(0.72 0.10 155)', 'oklch(0.79 0.11 82)', 'oklch(0.62 0.12 25)'];
+    const cores = ['var(--ok)', 'var(--warn)', 'var(--bad)'];
     const nomes = ['favorável', 'atenção', 'desfavorável'];
     const mm = t => parseInt(t.slice(0, 2), 10) * 60 + parseInt(t.slice(3, 5), 10);
     const agora = new Date();
@@ -673,19 +691,19 @@ class Component extends DCLogic {
     const n = this.nivel(w, g, r);
     const chuva = this.props.limiteChuva ?? 70;
     if (n === 2) {
-      return ['Condições desfavoráveis.', 'oklch(0.68 0.13 25)',
+      return ['Condições desfavoráveis.', 'var(--bad-ink)',
         r >= chuva ? 'Alta chance de chuva no campo. Guarde os modelos e espere a janela abrir.'
                    : 'Vento acima do limite confortável, inclusive nas rajadas. Dia de oficina.',
-        'oklch(0.33 0.055 25)'];
+        'var(--bad-bg)'];
     }
     if (n === 1) {
-      return ['Condições de atenção.', 'oklch(0.79 0.11 82)',
+      return ['Condições de atenção.', 'var(--warn)',
         'Vento ou chuva no limite. Dia para pilotos experientes.',
-        'oklch(0.34 0.05 82)'];
+        'var(--warn-bg)'];
     }
-    return ['Condições favoráveis.', 'oklch(0.76 0.10 155)',
+    return ['Condições favoráveis.', 'var(--ok-ink)',
       'Vento e céu dentro do confortável. Belo dia para voar.',
-      'oklch(0.34 0.045 155)'];
+      'var(--ok-bg)'];
   }
 
   renderVals() {
